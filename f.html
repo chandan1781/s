@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a1c4fd, #c2e9fb);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px #000;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .photo-gallery {
+      margin: 30px 0;
+    }
+
+    .photo-gallery img {
+      width: 200px;
+      height: 200px;
+      margin: 10px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .photo-gallery img:hover {
+      transform: rotate(5deg) scale(1.1);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+    }
+
+    .led-banner {
+      margin-top: 40px;
+      background: #111;
+      color: #ff4d4d;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #ff4d4d;
+      position: relative;
+      height: 60px;
+      overflow: hidden;
+    }
+
+    .led-banner span {
+      position: absolute;
+      white-space: nowrap;
+      font-size: 2.5em;
+      font-weight: bold;
+      animation: marquee 10s linear infinite;
+    }
+
+    @keyframes marquee {
+      from { left: 100%; }
+      to { left: -100%; }
+    }
+
+    .age-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 30px;
+      animation: fadeInZoom 2s ease;
+    }
+
+    @keyframes fadeInZoom {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .age-box {
+    background-color: #ffffffcc; /* soft white with transparency */
+    color: #000; /* solid black text for high contrast */
+    border-radius: 12px;
+    padding: 20px;
+    margin: 10px;
+    min-width: 120px;
+    font-size: 1.5em;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+  }
+
+  .age-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #444;
+  }
+    .age-box:hover {
+      transform: scale(1.05) rotate(-2deg);
+      box-shadow: 0 0 20px #fff;
+    }
+
+    /* Confetti canvas */
+    canvas#confetti {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="confetti"></canvas>
+
+  <h1>🎉 Happy Birthday! 🎉</h1>
+
+  <div class="age-container" id="age-container"></div>
+
+  <div class="photo-gallery">
+    <img src="IMG_0012.JPG" alt="Photo 1">
+    <img src="IMG_0047.JPG" alt="Photo 2">
+    <img src="IMG_9914.JPG" alt="Photo 3">
+    <img src="WhatsApp Image 2025-05-03 at 12.51.56 AM.jpeg" alt="Photo 4">
+  </div>
+
+  <div class="led-banner">
+    <span>🎈 Happy Birthday, spandu 🎈</span>
+  </div>
+
+  <!-- Age Calculation -->
+  <script>
+    function calculateAge() {
+      const birthDate = new Date("2005-03-05T00:00:00");
+      const now = new Date();
+      const diff = now - birthDate;
+  
+      const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+      const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.44));
+      const weeks = Math.floor(diff / (1000 * 60 * 60 * 24 * 7));
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor(diff / (1000 * 60));
+      const seconds = Math.floor(diff / 1000);
+  
+      const timeUnits = [
+        { label: "Years", value: years },
+        { label: "Months", value: months },
+        { label: "Weeks", value: weeks },
+        { label: "Days", value: days },
+        { label: "Hours", value: hours },
+        { label: "Minutes", value: minutes },
+        { label: "Seconds", value: seconds },
+      ];
+  
+      const colors = [
+        "#FFB6C1", "#ADD8E6", "#90EE90", "#FFD700",
+        "#FFA07A", "#E6E6FA", "#F08080"
+      ];
+  
+      const container = document.getElementById("age-container");
+      container.innerHTML = "";
+      timeUnits.forEach((unit, index) => {
+        const div = document.createElement("div");
+        div.classList.add("age-box");
+        div.innerHTML = `${unit.value}<br>${unit.label}`;
+        div.style.backgroundColor = colors[index % colors.length];
+        container.appendChild(div);
+      });
+    }
+  
+    setInterval(calculateAge, 1000);
+    calculateAge();
+  </script>
+
+  <!-- Confetti Animation -->
+  <script>
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const confetti = Array.from({ length: 200 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      r: Math.random() * 6 + 4,
+      d: Math.random() * 100,
+      color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+      tilt: Math.random() * 10 - 10,
+      tiltAngle: 0
+    }));
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confetti.forEach(p => {
+        ctx.beginPath();
+        ctx.lineWidth = p.r / 2;
+        ctx.strokeStyle = p.color;
+        ctx.moveTo(p.x + p.tilt + p.r / 2, p.y);
+        ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2);
+        ctx.stroke();
+      });
+      update();
+    }
+
+    function update() {
+      confetti.forEach(p => {
+        p.y += Math.cos(p.d) + 1 + p.r / 2;
+        p.x += Math.sin(p.d);
+        p.tiltAngle += 0.1;
+        p.tilt = Math.sin(p.tiltAngle - p.d / 3) * 15;
+
+        if (p.y > canvas.height) {
+          p.x = Math.random() * canvas.width;
+          p.y = -20;
+        }
+      });
+    }
+
+    (function animate() {
+      requestAnimationFrame(animate);
+      draw();
+    })();
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>
